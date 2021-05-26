@@ -1,0 +1,20 @@
+<div class="chip-input-container">
+    <div class="chip-container">
+        <div class="chip-item no-select pointer" *ngFor="let chip of chips">
+            <div class="chip-text">
+                {{chip}}
+            </div>
+            <div class="remove-icon" (click)="removeChip(chip)">
+                x
+            </div>
+        </div> 
+    </div>
+    <div class="input-container">
+        <input type="text" class="custom-input" (focus)="onInputFocus()" (focusout)="onInputOutFocus()">
+        <div class="search-dropdown" *ngIf="showDropdown">
+            <div class="search-option pointer" *ngFor="let item of dropdownItems" (click)="addChip(item)">
+                {{item}}
+            </div>
+        </div>
+    </div>
+</div>
