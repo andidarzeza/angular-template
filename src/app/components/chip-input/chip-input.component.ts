@@ -1,7 +1,21 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-chip-input',
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('100ms', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate('100ms', style({opacity: 0}))
+        ])
+      ]
+    )],
   templateUrl: './chip-input.component.html',
   styleUrls: ['./chip-input.component.scss']
 })
@@ -16,9 +30,9 @@ export class ChipInputComponent implements OnInit {
 
   // Control Variables 
   public showDropdown = false;
-
   chips: string[] = ["Missing Speed", "Class Missmatch"];
-  dropdownItems: string[] = ["Plate Check", "Manual Verification"];
+  dropdownItems: string[] = ["Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification"
+,"Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification"];
   ngOnInit(): void {
   }
   
@@ -27,6 +41,8 @@ export class ChipInputComponent implements OnInit {
     this._removeItemFromDropdown(chip);
     this._setFocusToInput();
     this._startInputAnimation();
+    this._showDropdown();
+    this._showDropdown();
   }
 
   removeChip(chip: string): void {
@@ -34,28 +50,44 @@ export class ChipInputComponent implements OnInit {
     this._pushItemToDropdown(chip);
     this._setFocusToInput();
     this._startInputAnimation();
+    this._showDropdown();
   }
 
   onInputFocus(): void {
-    this.showDropdown = true;
+    this._showDropdown();
     this._changeUnderlineStyle();
   }
 
   onInputOutFocus(): void {
-    // setTimeout(()=>{
-    //   this.showDropdown = false;
-    // },100);
+    this._hideDropdown();
     this._changeUnderlineStyle(true);
   }
 
   setChipStyle(id: string): void {
+    const chipText = document.getElementById('text-' + id) as HTMLElement;
+    const chipIcon = document.getElementById('icon-' + id) as HTMLElement;
     const chip = document.getElementById(id) as HTMLElement;
-    if(chip) {
+    
+    if(chip && chipText && chipIcon) {
       setTimeout(() => {
         this.styledChipId = id;
       }, 200);
       chip.style.background = "#2196f3";
+      chipText.style.color = "white";
+      chipIcon.style.color = "white";
     }
+  }
+
+  private _showDropdown(): void {
+    setTimeout(()=> {
+      this.showDropdown = true;
+    }, 200);
+  }
+
+  private _hideDropdown(): void {
+    setTimeout(()=> {
+      this.showDropdown = false;
+    }, 200);
   }
 
   private _pushItemToChips(chip: string): void {
@@ -76,7 +108,7 @@ export class ChipInputComponent implements OnInit {
 
   private _changeUnderlineStyle(def?: boolean): void {
     const input = document.getElementById("input-" + this.randomId);
-    const chip = document.getElementById("chip-" + this.randomId);
+    const chip = document.getElementById("chip-container" + this.randomId);
     if(def) {
       if(input && chip) {
         chip.style.borderBottom = "2px solid lightgray";
@@ -115,9 +147,14 @@ export class ChipInputComponent implements OnInit {
   @HostListener('click', ['$event.target'])
   onClick(event: any) {
     if(event?.id !== this.styledChipId && event?.id !== 'text-' + this.styledChipId) {
+      const styledChipIcon = document.getElementById('icon-' + this.styledChipId) as HTMLElement;
+      const styledChipText = document.getElementById('text-' + this.styledChipId) as HTMLElement;
       const styledChip = document.getElementById(this.styledChipId) as HTMLElement;
-      if(styledChip) {
+
+      if(styledChip && styledChipText && styledChipIcon) {
         styledChip.style.background = "#efefef";
+        styledChipText.style.color = "black";
+        styledChipIcon.style.color = "gray";
       }  
     }
  }
