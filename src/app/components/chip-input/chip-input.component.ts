@@ -144,7 +144,7 @@ export class ChipInputComponent implements OnInit {
     return array;
   }
 
-  @HostListener('click', ['$event.target'])
+  @HostListener('document:click', ['$event.target'])
   onClick(event: any) {
     if(event?.id !== this.styledChipId && event?.id !== 'text-' + this.styledChipId) {
       const styledChipIcon = document.getElementById('icon-' + this.styledChipId) as HTMLElement;
