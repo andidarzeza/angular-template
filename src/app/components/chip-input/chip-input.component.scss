@@ -40,7 +40,9 @@
 }
 
 .search-dropdown {
-    width: 100%;
+    width: 280px;
+    max-height: 500px;
+    overflow: auto;
     position: absolute;
     margin-top: 3px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 30%);
@@ -55,7 +57,7 @@
     padding: 10px 1px;
     font-size: 14px;
     font-weight: 100;
-    transition: background-color 250ms;
+    transition: background-color 50ms;
 }
 
 .search-option:hover {

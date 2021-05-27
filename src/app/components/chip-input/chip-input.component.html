@@ -1,17 +1,17 @@
 <div class="chip-input-container">
-    <div class="chip-container" [id]="'chip-' + randomId">
+    <div class="chip-container" [id]="'chip-container' + randomId">
         <div class="chip-item no-select pointer" *ngFor="let chip of chips;index as i;" [id]="'chip-' + i + '-' + randomId" (click)="setChipStyle('chip-' + i + '-' + randomId)">
             <div class="chip-text" [id]="'text-chip-' + i + '-' + randomId">
                 {{chip}}
             </div>
             <div class="remove-icon" (click)="removeChip(chip)">
-                <mat-icon>close</mat-icon>
+                <mat-icon [id]="'icon-chip-' + i + '-' + randomId">close</mat-icon>
             </div>
         </div> 
     </div>
     <div class="input-container">
         <input [id]="'input-' + randomId" type="text" class="custom-input" (focus)="onInputFocus()" (focusout)="onInputOutFocus()">
-        <div class="search-dropdown" *ngIf="showDropdown">
+        <div class="search-dropdown" *ngIf="showDropdown" [@enterAnimation]>
             <div class="search-option pointer" *ngFor="let item of dropdownItems" (click)="addChip(item)">
                 {{item}}
             </div>
