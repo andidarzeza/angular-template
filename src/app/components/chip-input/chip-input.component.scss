@@ -25,7 +25,7 @@
     background: #efefef;
     color: black;
     padding: 2px 5px;
-    border-radius: 13px;
+    border-radius: 20px;
     margin-right: 4px;
     transition: box-shadow 200ms, background-color 300ms;
     font-size: 14px;
@@ -41,7 +41,7 @@
 
 .search-dropdown {
     width: 280px;
-    max-height: 500px;
+    max-height: 325px;
     overflow: auto;
     position: absolute;
     margin-top: 3px;
@@ -53,11 +53,12 @@
 }
 
 .search-option {
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial;
     text-align: center;
-    padding: 10px 1px;
+    padding: 15px 1px;
     font-size: 14px;
-    font-weight: 100;
-    transition: background-color 50ms;
+    font-weight: 300;
+    transition: background-color 50ms;  
 }
 
 .search-option:hover {
