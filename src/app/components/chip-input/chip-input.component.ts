@@ -22,6 +22,7 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 export class ChipInputComponent implements OnInit {
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
+  toRemove = false;
   constructor() { }
   
   // randomIds
@@ -46,8 +47,9 @@ export class ChipInputComponent implements OnInit {
     this.onAdd.emit(chip);
   }
 
-  removeChip(chip: string, index: number): void {
+  removeChip(chip: any, index: number): void {
     this._startRemovingStyle(index);
+    this.toRemove = false;
     setTimeout(() => {
       this._removeStyleFromChip();
       this._removeItemFromChips(chip);
@@ -80,11 +82,13 @@ export class ChipInputComponent implements OnInit {
   }
 
   onInputFocus(): void {
+    this.toRemove = false;
     this._showDropdown();
     this._changeUnderlineStyle();
   }
 
   onInputOutFocus(): void {
+    this.toRemove = false;
     this._hideDropdown();
     this._changeUnderlineStyle(true);
   }
@@ -117,6 +121,19 @@ export class ChipInputComponent implements OnInit {
       }
     });    
     return val;
+  }
+
+  onkeyDown(event: any): void {
+    setTimeout(()=> {
+      if(event.key === "Backspace" && this.chips.length > 0) {
+        if(event.srcElement.value === "") {
+            const lastIndex = this.chips.length - 1;
+            this.setChipStyle('chip-' + lastIndex + '-' + this.randomId);
+            this._unfocusInput();
+            this.toRemove = true;
+        }
+      }
+    }, 100);
   }
 
   private _showDropdown(): void {
@@ -170,6 +187,14 @@ export class ChipInputComponent implements OnInit {
     }
   }
 
+  private _unfocusInput(): void {
+    const input = document.getElementById("input-" + this.randomId);
+    if(input) {
+      input.blur();
+      this.toRemove = false;
+    }
+  }
+
   private _startInputAnimation(): void {
     this._changeUnderlineStyle(true);
     setTimeout(() => {
@@ -210,5 +235,13 @@ export class ChipInputComponent implements OnInit {
       this._removeStyleFromChip();
     }
  }
+
+ @HostListener('document:keydown.backspace', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  if(this.toRemove  && this.chips.length > 0) {
+    const lastIndex = this.chips.length - 1;
+    const chip = this.chips[lastIndex];
+    this.removeChip(chip, lastIndex);
+  }
+}
 
 }
