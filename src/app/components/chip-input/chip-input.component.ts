@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chip-input',
@@ -20,7 +20,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./chip-input.component.scss']
 })
 export class ChipInputComponent implements OnInit {
-
+  @Output() onAdd: EventEmitter<any> = new EventEmitter();
+  @Output() onRemove: EventEmitter<any> = new EventEmitter();
   constructor() { }
   
   // randomIds
@@ -43,6 +44,7 @@ export class ChipInputComponent implements OnInit {
     this._startInputAnimation();
     this._showDropdown();
     this._showDropdown();
+    this.onAdd.emit(chip);
   }
 
   removeChip(chip: string): void {
@@ -51,6 +53,7 @@ export class ChipInputComponent implements OnInit {
     this._setFocusToInput();
     this._startInputAnimation();
     this._showDropdown();
+    this.onRemove.emit(chip);
   }
 
   onInputFocus(): void {
