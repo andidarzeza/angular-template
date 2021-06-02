@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'angular-template';
 
+  chips1 = ["andi",  "test"];
+  dropdown1 = ["darzeza",  "purpose"];
   onRemove(event: any): void {
     console.log(event);
     

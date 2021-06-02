@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chip-input',
@@ -25,15 +25,47 @@ export class ChipInputComponent implements OnInit {
   constructor() { }
   
   // randomIds
-  // TODO: implement function to implement random id.
-  public randomId = "test1234";
+  public randomId = this._uuidv4();
   private styledChipId = "";
 
   // Control Variables 
   public showDropdown = false;
-  chips: string[] = ["Missing Speed", "Class Missmatch"];
-  dropdownItems: string[] = ["Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification"
-,"Plate Check", "Manual Verification","Plate Check", "Manual Verification","Plate Check", "Manual Verification"];
+  @Input() chips: any[] = [
+    {
+      name: 'test',
+      value: 1,
+      description: {
+        it: "it",
+        en: "en"
+      }
+    },
+    {
+      name: 'test 2',
+      value: 2,
+      description: {
+        it: "it",
+        en: "en"
+      }
+    }
+  ];
+  @Input() dropdownItems: any[] = [
+    {
+      name: 'test 3',
+      value: 3,
+      description: {
+        it: "it",
+        en: "en"
+      }
+    },
+    {
+      name: 'test 4',
+      value: 4,
+      description: {
+        it: "it",
+        en: "en"
+      }
+    }
+  ];;
   ngOnInit(): void {
   }
   
@@ -145,6 +177,13 @@ export class ChipInputComponent implements OnInit {
       array.splice(index, 1);
     }
     return array;
+  }
+
+  private _uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 
   @HostListener('document:click', ['$event.target'])
