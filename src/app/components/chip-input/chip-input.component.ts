@@ -35,37 +35,38 @@ export class ChipInputComponent implements OnInit {
       name: 'test',
       value: 1,
       description: {
-        it: "it",
-        en: "en"
+        it: "Italiano",
+        en: "English",
       }
     },
     {
-      name: 'test 2',
+      name: 'test2',
       value: 2,
       description: {
-        it: "it",
-        en: "en"
+        it: "Italiano",
+        en: "English",
+      }
+    },
+    {
+      name: 'test3',
+      value: 4,
+      description: {
+        it: "Italiano",
+        en: "English",
       }
     }
   ];
   @Input() dropdownItems: any[] = [
     {
-      name: 'test 3',
-      value: 3,
+      name: 'test',
+      value: 1,
       description: {
-        it: "it",
-        en: "en"
-      }
-    },
-    {
-      name: 'test 4',
-      value: 4,
-      description: {
-        it: "it",
-        en: "en"
+        it: "Italiano",
+        en: "English",
       }
     }
-  ];;
+  ];
+  @Input() displayBy = "";
   ngOnInit(): void {
   }
   
@@ -111,6 +112,21 @@ export class ChipInputComponent implements OnInit {
       chipText.style.color = "white";
       chipIcon.style.color = "white";
     }
+  }
+
+  getDisplayValue(input: any): any {
+    let val = "";
+    const array = this.displayBy.split(".");
+    let firstTime = true;
+    array.forEach((item: any) => {
+      if(firstTime) {
+        val = input[item];
+        firstTime = false;  
+      } else  {
+        val = val[item];
+      }
+    });    
+    return val;
   }
 
   private _showDropdown(): void {
