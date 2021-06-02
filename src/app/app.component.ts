@@ -7,9 +7,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-template';
+  chips1: any[] = [];
+  dropdown1: any[] = [];
+  constructor() {
+    for(let i = 0;i<10;i++) {
+      this.dropdown1.push({
+        name: "name " + i
+      })
+    }
 
-  chips1 = ["andi",  "test"];
-  dropdown1 = ["darzeza",  "purpose"];
+    for(let i = 0;i<2;i++) {
+      this.chips1.push({
+        name: "chip " + i
+      })
+    }
+  }
   onRemove(event: any): void {
     console.log(event);
     

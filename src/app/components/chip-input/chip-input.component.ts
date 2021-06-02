@@ -30,42 +30,8 @@ export class ChipInputComponent implements OnInit {
 
   // Control Variables 
   public showDropdown = false;
-  @Input() chips: any[] = [
-    {
-      name: 'test',
-      value: 1,
-      description: {
-        it: "Italiano",
-        en: "English",
-      }
-    },
-    {
-      name: 'test2',
-      value: 2,
-      description: {
-        it: "Italiano",
-        en: "English",
-      }
-    },
-    {
-      name: 'test3',
-      value: 4,
-      description: {
-        it: "Italiano",
-        en: "English",
-      }
-    }
-  ];
-  @Input() dropdownItems: any[] = [
-    {
-      name: 'test',
-      value: 1,
-      description: {
-        it: "Italiano",
-        en: "English",
-      }
-    }
-  ];
+  @Input() chips: any[] = [];
+  @Input() dropdownItems: any[] = [];
   @Input() displayBy = "";
   ngOnInit(): void {
   }
