@@ -46,14 +46,37 @@ export class ChipInputComponent implements OnInit {
     this.onAdd.emit(chip);
   }
 
-  removeChip(chip: string): void {
-    this._removeStyleFromChip();
-    this._removeItemFromChips(chip);
-    this._pushItemToDropdown(chip);
-    this._setFocusToInput();
-    this._startInputAnimation();
-    this._showDropdown();
-    this.onRemove.emit(chip);
+  removeChip(chip: string, index: number): void {
+    this._startRemovingStyle(index);
+    setTimeout(() => {
+      this._removeStyleFromChip();
+      this._removeItemFromChips(chip);
+      this._pushItemToDropdown(chip);
+      this._setFocusToInput();
+      this._startInputAnimation();
+      this._showDropdown();
+      this.onRemove.emit(chip);
+    }, 120);
+  }
+
+  private _startRemovingStyle(i: number): void {
+    const chipId = 'chip-' + i + '-' + this.randomId;
+    const chipTextId = 'text-chip-' + i + '-' + this.randomId;
+    const iconId = 'icon-chip-' + i + '-' + this.randomId;
+    const chip = document.getElementById(chipId) as HTMLElement;
+    const chipText = document.getElementById(chipTextId) as HTMLElement;
+    const icon = document.getElementById(iconId) as HTMLElement;
+    console.log(chip);
+    if(chip && chipText && icon) {
+      const num = chip.offsetWidth;
+      chipText.style.display = 'none';
+      icon.style.display = 'none';
+      chip.style.width = num + 'px';
+      setTimeout(() => {
+        chip.style.width = '0px';
+      }, 10);
+    }
+    
   }
 
   onInputFocus(): void {
