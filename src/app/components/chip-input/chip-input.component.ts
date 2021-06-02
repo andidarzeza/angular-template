@@ -81,6 +81,7 @@ export class ChipInputComponent implements OnInit {
   }
 
   removeChip(chip: string): void {
+    this._removeStyleFromChip();
     this._removeItemFromChips(chip);
     this._pushItemToDropdown(chip);
     this._setFocusToInput();
@@ -202,18 +203,22 @@ export class ChipInputComponent implements OnInit {
     });
   }
 
+  private _removeStyleFromChip(): void  {
+    const styledChipIcon = document.getElementById('icon-' + this.styledChipId) as HTMLElement;
+    const styledChipText = document.getElementById('text-' + this.styledChipId) as HTMLElement;
+    const styledChip = document.getElementById(this.styledChipId) as HTMLElement;
+
+    if(styledChip && styledChipText && styledChipIcon) {
+      styledChip.style.background = "#efefef";
+      styledChipText.style.color = "black";
+      styledChipIcon.style.color = "gray";
+    }  
+  }
+
   @HostListener('document:click', ['$event.target'])
   onClick(event: any) {
     if(event?.id !== this.styledChipId && event?.id !== 'text-' + this.styledChipId) {
-      const styledChipIcon = document.getElementById('icon-' + this.styledChipId) as HTMLElement;
-      const styledChipText = document.getElementById('text-' + this.styledChipId) as HTMLElement;
-      const styledChip = document.getElementById(this.styledChipId) as HTMLElement;
-
-      if(styledChip && styledChipText && styledChipIcon) {
-        styledChip.style.background = "#efefef";
-        styledChipText.style.color = "black";
-        styledChipIcon.style.color = "gray";
-      }  
+      this._removeStyleFromChip();
     }
  }
 
