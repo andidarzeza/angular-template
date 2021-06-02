@@ -6,7 +6,7 @@
                 getDisplayValue(chip)
                 }}
             </div>
-            <div class="remove-icon" (click)="removeChip(chip)">
+            <div class="remove-icon" (click)="removeChip(chip, i)">
                 <mat-icon [id]="'icon-chip-' + i + '-' + randomId">close</mat-icon>
             </div>
         </div> 

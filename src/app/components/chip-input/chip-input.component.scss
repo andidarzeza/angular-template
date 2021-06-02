@@ -27,11 +27,12 @@
     padding: 2px 5px;
     border-radius: 20px;
     margin-right: 4px;
-    transition: box-shadow 300ms, background-color 300ms;
+    transition: box-shadow 300ms, background-color 300ms, width 390ms;
     font-size: 14px;
     font-weight: 300;
     display: flex;
     align-items: center;
+    min-height: 25px;
 }
 
 .chip-item:hover{
@@ -75,4 +76,8 @@
     width: 20px;
     height: 20px;
     font-size: 20px;
+}
+
+.chip-text {
+    margin-left: 2px;
 }
