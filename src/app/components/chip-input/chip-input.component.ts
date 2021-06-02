@@ -23,6 +23,7 @@ export class ChipInputComponent implements OnInit {
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
   toRemove = false;
+  previousValue = "";
   constructor() { }
   
   // randomIds
@@ -68,7 +69,6 @@ export class ChipInputComponent implements OnInit {
     const chip = document.getElementById(chipId) as HTMLElement;
     const chipText = document.getElementById(chipTextId) as HTMLElement;
     const icon = document.getElementById(iconId) as HTMLElement;
-    console.log(chip);
     if(chip && chipText && icon) {
       const num = chip.offsetWidth;
       chipText.style.display = 'none';
@@ -93,7 +93,7 @@ export class ChipInputComponent implements OnInit {
     this._changeUnderlineStyle(true);
   }
 
-  setChipStyle(id: string): void {
+  setChipStyle(id: string, background?: string): void {
     const chipText = document.getElementById('text-' + id) as HTMLElement;
     const chipIcon = document.getElementById('icon-' + id) as HTMLElement;
     const chip = document.getElementById(id) as HTMLElement;
@@ -102,7 +102,7 @@ export class ChipInputComponent implements OnInit {
       setTimeout(() => {
         this.styledChipId = id;
       }, 200);
-      chip.style.background = "#2196f3";
+      chip.style.background = background? background : "#2196f3";
       chipText.style.color = "white";
       chipIcon.style.color = "white";
     }
@@ -124,16 +124,20 @@ export class ChipInputComponent implements OnInit {
   }
 
   onkeyDown(event: any): void {
+    this.previousValue = event.srcElement.value;
+  }
+
+  onKeyUp(event: any): void {
     setTimeout(()=> {
       if(event.key === "Backspace" && this.chips.length > 0) {
-        if(event.srcElement.value === "") {
-            const lastIndex = this.chips.length - 1;
-            this.setChipStyle('chip-' + lastIndex + '-' + this.randomId);
-            this._unfocusInput();
-            this.toRemove = true;
+        if(this.previousValue === "") {
+          const lastIndex = this.chips.length - 1;
+          this.setChipStyle('chip-' + lastIndex + '-' + this.randomId);
+          this._unfocusInput();
+          this.toRemove = true;
         }
       }
-    }, 100);
+    }, 50);
   }
 
   private _showDropdown(): void {
