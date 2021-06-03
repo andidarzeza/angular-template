@@ -12,7 +12,7 @@
         </div> 
     </div>
     <div class="input-container">
-        <input [id]="'input-' + randomId" type="text" class="custom-input" (focus)="onInputFocus()" (focusout)="onInputOutFocus()" (keydown)="onkeyDown($event)" (keyup)="onKeyUp($event)">
+        <input [placeholder]="placeholder" [id]="'input-' + randomId" type="text" class="custom-input" (focus)="onInputFocus()" (focusout)="onInputOutFocus()" (keydown)="onkeyDown($event)" (keyup)="onKeyUp($event)">
         <div class="search-dropdown" *ngIf="showDropdown" [@enterAnimation]>
             <div class="search-option pointer" *ngFor="let item of dropdownItems" (click)="addChip(item)">
                 {{

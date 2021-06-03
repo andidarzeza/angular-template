@@ -35,6 +35,7 @@ export class ChipInputComponent implements OnInit {
   @Input() chips: any[] = [];
   @Input() dropdownItems: any[] = [];
   @Input() displayBy = "";
+  @Input() placeholder = "";
   ngOnInit(): void {
   }
   
