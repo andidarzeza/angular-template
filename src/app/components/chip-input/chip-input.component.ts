@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-chip-input',
@@ -32,11 +32,21 @@ export class ChipInputComponent implements OnInit {
 
   // Control Variables 
   public showDropdown = false;
+
+  // input variables
   @Input() chips: any[] = [];
   @Input() dropdownItems: any[] = [];
   @Input() displayBy = "";
   @Input() placeholder = "";
+
+  // container variables;
+  private _temporaryChipHolder: any[] = [];
+  private _selectedItemWithArrow: any = null;
+
+  // reference variables;
+  @ViewChild('searchInput', { static: true }) searchInput: ElementRef = new ElementRef("searchInput");
   ngOnInit(): void {
+    this._temporaryChipHolder = this.dropdownItems;    
   }
   
   addChip(chip: string): void {
@@ -52,6 +62,8 @@ export class ChipInputComponent implements OnInit {
   removeChip(chip: any, index: number): void {
     this._startRemovingStyle(index);
     this.toRemove = false;
+    this._resetInputValue();
+    this._resetDropDownItems();
     setTimeout(() => {
       this._removeStyleFromChip();
       this._removeItemFromChips(chip);
@@ -61,6 +73,14 @@ export class ChipInputComponent implements OnInit {
       this._showDropdown();
       this.onRemove.emit(chip);
     }, 120);
+  }
+
+  private _resetDropDownItems(): void {
+    this.dropdownItems = this._temporaryChipHolder;
+  }
+
+  private _resetInputValue(): void {
+    this.searchInput.nativeElement.value = "";
   }
 
   private _startRemovingStyle(i: number): void {
@@ -90,6 +110,7 @@ export class ChipInputComponent implements OnInit {
 
   onInputOutFocus(): void {
     this.toRemove = false;
+    this._selectedItemWithArrow = null;
     this._hideDropdown();
     this._changeUnderlineStyle(true);
   }
@@ -128,8 +149,13 @@ export class ChipInputComponent implements OnInit {
     this.previousValue = event.srcElement.value;
   }
 
-  onKeyUp(event: any): void {
-    setTimeout(()=> {
+  onKeyUp(event: any): void {    
+    if(event.srcElement.value === "") {
+      this._resetDropDownItems();
+    } else {
+      this._filterDropDownChipsStartingWith(event.srcElement.value);
+    }
+    setTimeout(()=> {      
       if(event.key === "Backspace" && this.chips.length > 0) {
         if(this.previousValue === "") {
           const lastIndex = this.chips.length - 1;
@@ -137,8 +163,73 @@ export class ChipInputComponent implements OnInit {
           this._unfocusInput();
           this.toRemove = true;
         }
+      } else if(event.key === "ArrowDown") {
+        if(this.showDropdown) {
+          if(this._selectedItemWithArrow) {
+            const index = this.dropdownItems.indexOf(this._selectedItemWithArrow);
+            if(this.dropdownItems[index + 1]) {
+              this._selectedItemWithArrow = this.dropdownItems[index + 1];
+              const doc = document.getElementById("dropdown-" + this.randomId) as HTMLElement;
+              if(doc) {
+                const childs = doc.childNodes;
+                const item = childs[index + 1] as any;
+                const prev = childs[index] as any;
+                item.classList.add("onArrowStyle"); 
+                prev.classList.remove("onArrowStyle"); 
+              }
+            }
+          } else {
+            this._selectedItemWithArrow = this.dropdownItems[0];
+            const doc = document.getElementById("dropdown-" + this.randomId) as HTMLElement;
+            if(doc) {
+              const childs = doc.childNodes;
+              const item = childs[0] as any;
+              item.classList.add("onArrowStyle"); 
+
+            }
+          }          
+        }
+      } else if(event.key === "ArrowUp") {
+        if(this.showDropdown) {
+          if(this._selectedItemWithArrow) {
+            const index = this.dropdownItems.indexOf(this._selectedItemWithArrow);
+            if(this.dropdownItems[index - 1]){
+              this._selectedItemWithArrow = this.dropdownItems[index - 1];
+              const doc = document.getElementById("dropdown-" + this.randomId) as HTMLElement;
+              if(doc) {
+                const childs = doc.childNodes;
+                const item = childs[index - 1] as any;
+                const prev = childs[index] as any;
+                item.classList.add("onArrowStyle"); 
+                prev.classList.remove("onArrowStyle"); 
+              }
+            }
+          } else {
+            this._selectedItemWithArrow = this.dropdownItems[0];
+            const doc = document.getElementById("dropdown-" + this.randomId) as HTMLElement;
+            if(doc) {
+              const childs = doc.childNodes;
+              const item = childs[0] as any;
+              item.classList.add("onArrowStyle");
+            }
+          }          
+        }
+      } else if(event.key === "Enter") {
+        if(this._selectedItemWithArrow) {
+          const index = this.dropdownItems.indexOf(this._selectedItemWithArrow);
+          if(index > -1) {
+            this.addChip(this.dropdownItems[index]);
+            this._selectedItemWithArrow = null;
+          }
+        }
       }
     }, 50);
+  }
+
+  private _filterDropDownChipsStartingWith(value: string): void {    
+    this.dropdownItems = this._temporaryChipHolder.filter((chip: any) => {
+      return chip[this.displayBy]?.toLowerCase().includes(value?.toLowerCase());
+    })
   }
 
   private _showDropdown(): void {
