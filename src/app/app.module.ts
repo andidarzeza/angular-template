@@ -7,11 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChipInputComponent } from './components/chip-input/chip-input.component';
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MiddleClickDirective } from './directives/middle-click.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChipInputComponent
+    ChipInputComponent,
+    MiddleClickDirective
   ],
   imports: [
     BrowserModule,

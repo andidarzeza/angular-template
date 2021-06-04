@@ -1,6 +1,6 @@
 <div class="chip-input-container">
     <div class="chip-container" [id]="'chip-container' + randomId">
-        <div class="chip-item no-select pointer" *ngFor="let chip of chips;index as i;" [id]="'chip-' + i + '-' + randomId" (click)="setChipStyle('chip-' + i + '-' + randomId)">
+        <div class="chip-item no-select pointer" *ngFor="let chip of chips;index as i;" (middleclick)="onMiddleClick($event, chip, i)" [id]="'chip-' + i + '-' + randomId" (click)="onChipClick('chip-' + i + '-' + randomId)">
             <div class="chip-text" [id]="'text-chip-' + i + '-' + randomId">
                 {{
                 getDisplayValue(chip)

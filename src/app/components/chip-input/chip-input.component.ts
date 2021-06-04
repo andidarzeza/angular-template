@@ -57,6 +57,7 @@ export class ChipInputComponent implements OnInit, ControlValueAccessor {
   @Input() displayBy = "";
   @Input() placeholder = "";
   @Input() maxChips = 999;
+  @Input() middleClickRemove = false;
   // container variables;
   private _temporaryChipHolder: any[] = [];
   private _selectedItemWithArrow: any = null;
@@ -137,7 +138,17 @@ export class ChipInputComponent implements OnInit, ControlValueAccessor {
     this._changeUnderlineStyle(true);
   }
 
-  setChipStyle(id: string, background?: string): void {
+  onChipClick(id: string, background?: string): void {
+    this._setChipStyle(id, background);
+  }
+
+  onMiddleClick(event: any, chip: any, index: number): void {
+    if(this.middleClickRemove) {
+      this.removeChip(chip, index);
+    }
+  }
+
+  private _setChipStyle(id: string, background?: string): void {
     const chipText = document.getElementById('text-' + id) as HTMLElement;
     const chipIcon = document.getElementById('icon-' + id) as HTMLElement;
     const chip = document.getElementById(id) as HTMLElement;
@@ -181,7 +192,7 @@ export class ChipInputComponent implements OnInit, ControlValueAccessor {
       if(event.key === "Backspace" && this.chips.length > 0) {
         if(this.previousValue === "") {
           const lastIndex = this.chips.length - 1;
-          this.setChipStyle('chip-' + lastIndex + '-' + this.randomId);
+          this._setChipStyle('chip-' + lastIndex + '-' + this.randomId);
           this._unfocusInput();
           this.toRemove = true;
         }
