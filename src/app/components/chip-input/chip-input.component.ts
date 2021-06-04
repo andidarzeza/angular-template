@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-chip-input',
@@ -16,15 +17,33 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Outpu
         ])
       ]
     )],
+    providers: [
+      { 
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => ChipInputComponent),
+        multi: true
+      }
+    ],
   templateUrl: './chip-input.component.html',
   styleUrls: ['./chip-input.component.scss']
 })
-export class ChipInputComponent implements OnInit {
+export class ChipInputComponent implements OnInit, ControlValueAccessor {
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
   toRemove = false;
   previousValue = "";
   constructor() { }
+  propagateChange = (_: any) => {};
+  writeValue(obj: any): void {
+    if(obj)
+    this.chips = obj;
+  }
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(): void {
+    
+  }
   
   // randomIds
   public randomId = this._uuidv4();
@@ -32,13 +51,12 @@ export class ChipInputComponent implements OnInit {
 
   // Control Variables 
   public showDropdown = false;
-
   // input variables
   @Input() chips: any[] = [];
   @Input() dropdownItems: any[] = [];
   @Input() displayBy = "";
   @Input() placeholder = "";
-
+  @Input() maxChips = 999;
   // container variables;
   private _temporaryChipHolder: any[] = [];
   private _selectedItemWithArrow: any = null;
@@ -46,17 +64,20 @@ export class ChipInputComponent implements OnInit {
   // reference variables;
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef = new ElementRef("searchInput");
   ngOnInit(): void {
-    this._temporaryChipHolder = this.dropdownItems;    
+    this._temporaryChipHolder = this.dropdownItems;
   }
   
   addChip(chip: string): void {
-    this._pushItemToChips(chip);
-    this._removeItemFromDropdown(chip);
-    this._setFocusToInput();
-    this._startInputAnimation();
-    this._showDropdown();
-    this._showDropdown();
-    this.onAdd.emit(chip);
+    if(this.chips.length < this.maxChips) {
+      this._pushItemToChips(chip);
+      this._removeItemFromDropdown(chip);
+      this._setFocusToInput();
+      this._startInputAnimation();
+      this._showDropdown();
+      this._showDropdown();
+      this.onAdd.emit(chip);
+      this.propagateChange(this.chips);
+    }
   }
 
   removeChip(chip: any, index: number): void {
@@ -72,6 +93,7 @@ export class ChipInputComponent implements OnInit {
       this._startInputAnimation();
       this._showDropdown();
       this.onRemove.emit(chip);
+      this.propagateChange(this.chips);
     }, 120);
   }
 
