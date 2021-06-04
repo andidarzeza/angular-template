@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,11 @@ export class AppComponent {
       name: "Viaggio Incompleto"
     }
   ];
-  constructor() {
+  public form: FormGroup;
+  constructor(public fb: FormBuilder) {
+    this.form = this.fb.group({
+      items: [[]]
+    })
     // for(let i = 0;i<10;i++) {
     //   this.dropdown1.push({
     //     name: "name " + i
