@@ -8,12 +8,14 @@ import { ChipInputComponent } from './components/chip-input/chip-input.component
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MiddleClickDirective } from './directives/middle-click.directive';
+import { ToggleComponent } from './components/toggle/toggle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChipInputComponent,
-    MiddleClickDirective
+    MiddleClickDirective,
+    ToggleComponent
   ],
   imports: [
     BrowserModule,
