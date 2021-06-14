@@ -1,8 +1,8 @@
 <form [formGroup]="form">
 
-    <app-chip-input [displayBy]="'name'" [dropdownItems] = "dropdown1" [placeholder]="'test'" formControlName="items" (onAdd)="onAdd($event)" (onRemove)="onRemove($event)"></app-chip-input>
+    <app-chip-input [displayBy]="'name'" [middleClickRemove]="true" [dropdownItems] = "dropdown1" [placeholder]="'test'" formControlName="items" (onAdd)="onAdd($event)" (onRemove)="onRemove($event)"></app-chip-input>
 
 </form>
 
-
+<button (click)="resetForm()">reset</button>
 {{form.value | json}}

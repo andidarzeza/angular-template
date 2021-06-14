@@ -16,6 +16,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
           animate('100ms', style({opacity: 0}))
         ])
       ]
+    ),
+    trigger(
+      'chipAnimation', [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('180ms', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({width: 100}),
+          animate('120ms', style({width: 0}))
+        ])
+      ]
     )],
     providers: [
       { 
@@ -75,18 +87,18 @@ export class ChipInputComponent implements OnInit, ControlValueAccessor {
       this._setFocusToInput();
       this._startInputAnimation();
       this._showDropdown();
-      this._showDropdown();
       this.onAdd.emit(chip);
       this.propagateChange(this.chips);
     }
   }
 
   removeChip(chip: any, index: number): void {
-    this._startRemovingStyle(index);
     this.toRemove = false;
     this._resetInputValue();
     this._resetDropDownItems();
     setTimeout(() => {
+      this._startRemovingStyle(index);
+
       this._removeStyleFromChip();
       this._removeItemFromChips(chip);
       this._pushItemToDropdown(chip);
@@ -107,20 +119,20 @@ export class ChipInputComponent implements OnInit, ControlValueAccessor {
   }
 
   private _startRemovingStyle(i: number): void {
-    const chipId = 'chip-' + i + '-' + this.randomId;
+    // const chipId = 'chip-' + i + '-' + this.randomId;
     const chipTextId = 'text-chip-' + i + '-' + this.randomId;
     const iconId = 'icon-chip-' + i + '-' + this.randomId;
-    const chip = document.getElementById(chipId) as HTMLElement;
+    // const chip = document.getElementById(chipId) as HTMLElement;
     const chipText = document.getElementById(chipTextId) as HTMLElement;
     const icon = document.getElementById(iconId) as HTMLElement;
-    if(chip && chipText && icon) {
-      const num = chip.offsetWidth;
+    if(chipText && icon) {
+      // const num = chip.offsetWidth;
       chipText.style.display = 'none';
       icon.style.display = 'none';
-      chip.style.width = num + 'px';
-      setTimeout(() => {
-        chip.style.width = '0px';
-      }, 10);
+      // chip.style.width = num + 'px';
+      // setTimeout(() => {
+        // chip.style.width = '0px';
+      // }, 10);
     }
     
   }

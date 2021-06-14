@@ -61,6 +61,10 @@ export class AppComponent {
     
   }
 
+  resetForm(): void {
+    this.form.get('items')?.setValue([]);
+  }
+
   onAdd(event: any): void {
     console.log(event);
   }
