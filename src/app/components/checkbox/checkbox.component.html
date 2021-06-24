@@ -1,0 +1,12 @@
+<div class="checkbox-container">
+    <div class="selected-option pointer" #slider>
+        <span class="option-text">
+            {{options[selectedOption]}}
+        </span>
+    </div>
+    <div class="option pointer" *ngFor="let option of options" (click)="changeValue(option, slider)">
+        <span class="option-text">
+            {{option}}
+        </span>
+    </div>
+</div>

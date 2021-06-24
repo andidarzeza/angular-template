@@ -9,13 +9,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MiddleClickDirective } from './directives/middle-click.directive';
 import { ToggleComponent } from './components/toggle/toggle.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChipInputComponent,
     MiddleClickDirective,
-    ToggleComponent
+    ToggleComponent,
+    CheckboxComponent
   ],
   imports: [
     BrowserModule,
