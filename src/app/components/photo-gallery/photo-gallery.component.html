@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="previous-photo dimensions">
+        <div class="shadow"></div>
+        <img [src]="previousPhoto" class="image" alt="Photo 1">
+    </div>
+    <div class="gallery-container">
+        <!-- <div class="left pointer">
+            <mat-icon class="custom-icon">keyboard_arrow_left</mat-icon>
+        </div> -->
+        <div class="selected-photo">
+            <img [src]="selectedPhoto" class="image" alt="Photo 1">
+        </div>
+        <!-- <div class="right pointer">
+            <mat-icon class="custom-icon">keyboard_arrow_right</mat-icon>
+        </div> -->
+    </div>
+    <div class="next-photo dimensions" (click)="getNextPhoto()">
+        <div class="shadow"></div>
+        <img [src]="nextPhoto" class="image" alt="Photo 1">
+    </div>
+</div>
