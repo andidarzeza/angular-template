@@ -10,6 +10,7 @@ export class CheckboxComponent implements OnInit {
   @Input() options: any[] = [];
   @Output() valueChanged = new EventEmitter();
   selectedOption = 0;
+  optionWidth = 150;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,7 +20,7 @@ export class CheckboxComponent implements OnInit {
     const index = this.options?.indexOf(option);
     if(index > -1) {
       this.selectedOption = index;
-      const slideLeft = index * 150;
+      const slideLeft = index * this.optionWidth;
       if(slider) {
         slider.style.transform = `translateX(${slideLeft}px)`;
       }

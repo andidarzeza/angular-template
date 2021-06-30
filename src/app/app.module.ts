@@ -10,6 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MiddleClickDirective } from './directives/middle-click.directive';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { SliderComponent } from './components/slider/slider.component';
+import { PhotoGalleryComponent } from './components/photo-gallery/photo-gallery.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -17,14 +21,18 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     ChipInputComponent,
     MiddleClickDirective,
     ToggleComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    SliderComponent,
+    PhotoGalleryComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

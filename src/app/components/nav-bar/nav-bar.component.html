@@ -1,0 +1,29 @@
+<nav class = "nd-nav-bar">
+    <div class = "logo no-select">
+        LOGO
+    </div>
+
+    <div *ngIf="smallSize();else desktopView" class="no-select pointer" (click)="toggle()">
+        <mat-icon class="mobile-icon">menu</mat-icon>
+    </div>
+
+    <div class="nd-mobile-nav" *ngIf="smallSize() && showDropDown" [@inOutAnimation] [style.height.px] = "innerHeight">
+        <div class="mobile-link">
+            Angular Material
+        </div>
+    </div>
+
+    <ng-template #desktopView>
+        <ul class = "links">
+            <button mat-raised-button class="no-select pointer nd-active-link" #link0 (click)="selectLink(link0)">
+                <mat-icon class="link-icon">home</mat-icon>
+                <span>Home</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link1 (click)="selectLink(link1)">
+                <mat-icon class="link-icon">info</mat-icon>
+                <span>About Us</span> 
+            </button>
+        </ul>
+    </ng-template>
+
+</nav>
