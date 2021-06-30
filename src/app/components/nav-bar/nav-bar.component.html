@@ -7,22 +7,80 @@
         <mat-icon class="mobile-icon">menu</mat-icon>
     </div>
 
+    <div class="shadow" *ngIf="smallSize() && showDropDown" [style.height.px] = "innerHeight"></div>
     <div class="nd-mobile-nav" *ngIf="smallSize() && showDropDown" [@inOutAnimation] [style.height.px] = "innerHeight">
+        <div class="x-button pointer no-select" (click)="toggle()">
+            <mat-icon>close</mat-icon>
+        </div>
         <div class="mobile-link">
-            Angular Material
+            <!-- <ng-template *ngFor="let navItem of navItems;index as i"> -->
+                <button *ngFor="let navItem of navItems;index as i" mat-raised-button [id] = "'nav-mobile-link-' + i" [ngClass]="{'mobile-nd-active-link': true}" class="no-select pointer" (click)="selectLink('nav-mobile-link-' + i, 'mobile')">
+                    <mat-icon class="link-icon yellow-icon">{{navItem.icon}}</mat-icon>
+                    <span class="mobile-span">{{navItem.text}}</span> 
+                </button>
+                <!-- <button mat-raised-button [id] = "'nav-mobile-link-' + i" class="no-select pointer" (click)="selectLink('nav-mobile-link-' + i, 'mobile')">
+                    <mat-icon class="link-icon yellow-icon">{{navItem.icon}}</mat-icon>
+                    <span class="mobile-span">{{navItem.text}}</span> 
+                </button> -->
+            <!-- </ng-template> -->
+
+            <!-- <button mat-raised-button class="no-select pointer mobile-nd-active-link" #link0 (click)="selectLink(link0, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">home</mat-icon>
+                <span class="mobile-span">Home</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link1 (click)="selectLink(link1, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">dashboard</mat-icon>
+                <span class="mobile-span">Dashboard</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link7 (click)="selectLink(link7, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">map</mat-icon>
+                <span class="mobile-span">Map</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link2 (click)="selectLink(link2, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">supervised_user_circle</mat-icon>
+                <span class="mobile-span">Management</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link3 (click)="selectLink(link3, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">info</mat-icon>
+                <span class="mobile-span">About Us</span> 
+            </button> -->
+            <!-- <button mat-raised-button class="no-select pointer" #link4 (click)="selectLink(link4, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">info</mat-icon>
+                <span class="mobile-span">About Us</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link5 (click)="selectLink(link5, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">home</mat-icon>
+                <span class="mobile-span">Home</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link6 (click)="selectLink(link6, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">info</mat-icon>
+                <span class="mobile-span">About Us</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link8 (click)="selectLink(link8, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">info</mat-icon>
+                <span class="mobile-span">About Us</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link9 (click)="selectLink(link9, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">info</mat-icon>
+                <span class="mobile-span">About Us</span> 
+            </button>
+            <button mat-raised-button class="no-select pointer" #link10 (click)="selectLink(link10, 'mobile')">
+                <mat-icon class="link-icon yellow-icon">info</mat-icon>
+                <span class="mobile-span">About Us</span> 
+            </button> -->
         </div>
     </div>
 
     <ng-template #desktopView>
         <ul class = "links">
-            <button mat-raised-button class="no-select pointer nd-active-link" #link0 (click)="selectLink(link0)">
-                <mat-icon class="link-icon">home</mat-icon>
-                <span>Home</span> 
+            <button mat-raised-button *ngFor="let navItem of navItems;index as i" [id] = "'nav-desktop-link-' + i" class="no-select pointer nd-active-link" (click)="selectLink('nav-desktop-link-' + i)">
+                <mat-icon class="link-icon">{{navItem.icon}}</mat-icon>
+                <span>{{navItem.text}}</span> 
             </button>
-            <button mat-raised-button class="no-select pointer" #link1 (click)="selectLink(link1)">
+            <!-- <button mat-raised-button class="no-select pointer" #link1 (click)="selectLink(link1)">
                 <mat-icon class="link-icon">info</mat-icon>
                 <span>About Us</span> 
-            </button>
+            </button> -->
         </ul>
     </ng-template>
 
