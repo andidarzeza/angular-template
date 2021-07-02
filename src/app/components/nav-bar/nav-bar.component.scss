@@ -1,3 +1,7 @@
+:root {
+    --topMargin: 67px;
+}
+
 .nd-nav-bar {
     box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
     display: flex;
@@ -5,6 +9,7 @@
     align-items: center;
     background-color: rgb(36,37,42);
     position: relative;
+    z-index: 1;
 }
 
 .links {
@@ -19,7 +24,6 @@
     padding: 1px 25px;
     margin: 0px 5px;
     color: white;
-    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +54,7 @@
 }
 
 .nd-active-link {
-    background-color: #0783a9 !important;
+    border-left: 3px solid #0783a9 !important;
 }
 
 .mobile-nd-active-link {
@@ -131,4 +135,70 @@
 
 .yellow-icon {
     color: #f6af06 !important;
+}
+
+
+.desktop-side-bar  {
+    color: gray;
+    position: absolute;
+    background-color: #24252a;
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+    display: flex;
+    height: 100%;
+    align-items: center;
+    top: 0;
+    flex-direction: column;
+    width: 80px;
+    transition: 400ms width;
+}
+
+.top-right-icon {
+    font-size: 33px;
+    height: 33px;
+    width: 33px;
+    cursor: pointer;
+}
+
+.side-bar-icon {
+    font-size: 26px;
+    height: 26px;
+    width: 26px;
+    cursor: pointer;
+    padding: 16px 9px;
+}
+
+.top-right-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 17px 15px;
+}
+
+.back-button {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    background: none !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.nav-button {
+    background: none !important;
+    color: white !important;
+    box-shadow: none !important;
+    width: 98%;
+    display: flex;
+}
+
+.first-item {
+    margin-top: 67px;
+}
+
+.delimiter {
+    width: 98%;
+    border: 1px solid gray;
+    margin: 10px 0px;
 }
