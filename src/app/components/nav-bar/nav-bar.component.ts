@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -30,6 +30,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
   ]
 })
 export class NavBarComponent implements OnInit {
+  @ViewChild('desktopSideBar') desktopSideBar: ElementRef | undefined;
   navItems: any[] = [{
     icon: "home",
     text: 'Home',
@@ -37,8 +38,7 @@ export class NavBarComponent implements OnInit {
   },
   {
     icon: "dashboard",
-    text: 'Dashboard',
-    selectedLink: false
+    text: 'Dashboard'
   }];
   public innerWidth: number;
   public innerHeight: number;
@@ -98,8 +98,33 @@ export class NavBarComponent implements OnInit {
     return this.innerWidth <= 400;
   }
 
-  toggle(): void {
+  toggle(view: string): void {
+    if(view === 'mobile') {
+      console.log('mobile');
+    } else {
+      if(this.showDropDown) {
+        this._closeDesktopSideBar();
+      } else {
+        this._openDesktopSideBar();
+      }
+    }
     this.showDropDown =  !this.showDropDown;
+  }
+
+  private _closeDesktopSideBar(): void {
+    if(this.desktopSideBar) {
+      const sidebar = this.desktopSideBar?.nativeElement as HTMLElement;
+      sidebar.style.width = "80px";
+    }
+    // 80px
+  }
+
+  private _openDesktopSideBar(): void {
+    if(this.desktopSideBar) {
+      const sidebar = this.desktopSideBar?.nativeElement as HTMLElement;
+      sidebar.style.width = "300px";
+    }
+    // 300px
   }
 
   private _calculateBorder(): number {
@@ -116,7 +141,7 @@ export class NavBarComponent implements OnInit {
   onClick(event: any) {
     if(this.showDropDown)  {
       if(event.clientX > this._calculateBorder() && event.clientY > 70) {
-        this.toggle();
+        this.toggle('mobile');
       }
     }
     
